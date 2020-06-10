@@ -1,7 +1,12 @@
-# Create .bashr_profile symlink
-# .bash_profile loads bash_rc config
-ln -s -f $HOME/dotfiles/.bash_profile $HOME/.bash_profile
-echo ".bash_profile OK"
+# Check if bash exists
+if [ -x "$(cat /etc/shells | grep bash | tr -d '\n')" ]; then
+    # Create .bash_profile symlink
+    # .bash_profile loads bash_rc config
+    ln -s -f $HOME/dotfiles/.bash_profile $HOME/.bash_profile
+    echo "bash OK"
+else
+    echo "bash SKIP"
+fi
 
 # Create vimrc symlink
 if [ -x "$(command -v vim)" ]; then
