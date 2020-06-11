@@ -8,9 +8,19 @@ else
     echo "bash SKIP"
 fi
 
-# Create vimrc symlink
+# Create .vimrc and .vim directory symlinks
 if [ -x "$(command -v vim)" ]; then
     ln -s -f $HOME/dotfiles/.vimrc $HOME/.vimrc
+
+    # clone airline into .vim directory
+    if [ -d $HOME/dotfiles/.vim/pack/dist/start/vim-airline/.git ]; then
+        cd $HOME/dotfiles/.vim/pack/dist/start/vim-airline && git pull origin master
+    else
+        git clone git@github.com:vim-airline/vim-airline.git $HOME/dotfiles/.vim/pack/dist/start/vim-airline
+    fi
+
+    ln -s -f -T $HOME/dotfiles/.vim/ $HOME/.vim
+
     echo "vim OK"
 else
     echo "vim SKIP"
